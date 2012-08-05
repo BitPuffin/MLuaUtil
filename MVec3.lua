@@ -19,53 +19,65 @@ end
 
 function MVec3.__add(first_component, second_component)
     if getmetatable(first_component) is self and getmetatable(second_component) is self then
-        return {
-            first_component[1] + second_component[1],
-            first_component[2] + second_component[2],
-            first_component[3] + second_component[3]
-        }
+        return self.new(
+            {
+                first_component[1] + second_component[1],
+                first_component[2] + second_component[2],
+                first_component[3] + second_component[3]
+            }
+        )
     end
 
     if type(first_component) is "number" and getmetatable(second_component) is self then
-        return {
-            first_component + second_component[1],
-            first_component + second_component[2],
-            first_component + second_component[3]
-        }
+        return self.new(
+            {
+                first_component + second_component[1],
+                first_component + second_component[2],
+                first_component + second_component[3]
+            }
+        )
     end
 
     if type(second_component) is "number" and getmetatable(first_component) is self then
-        return {
-            second_component + first_component[1],
-            second_component + first_component[2],
-            second_component + first_component[3]
-        }
+        return self.new(
+            {
+                second_component + first_component[1],
+                second_component + first_component[2],
+                second_component + first_component[3]
+            }
+        )
     end
 end
 
 function MVec3.__sub(first_component, second_component)
     if getmetatable(first_component) is self and getmetatable(second_component) is self then
-        return {
-            first_component[1] - second_component[1],
-            first_component[2] - second_component[2],
-            first_component[3] - second_component[3]
-        }
+        return self.new(
+            {
+                first_component[1] - second_component[1],
+                first_component[2] - second_component[2],
+                first_component[3] - second_component[3]
+            }
+        )
     end
 
     if type(first_component) is "number" and getmetatable(second_component) is self then
-        return {
-            first_component - second_component[1],
-            first_component - second_component[2],
-            first_component - second_component[3]
-        }
+        return self.new(
+            {
+                first_component - second_component[1],
+                first_component - second_component[2],
+                first_component - second_component[3]
+            }
+        )
     end
 
     if type(second_component) is "number" and getmetatable(first_component) is self then
-        return {
-            second_component - first_component[1],
-            second_component - first_component[2],
-            second_component - first_component[3]
-        }
+        return self.new(
+            {
+                second_component - first_component[1],
+                second_component - first_component[2],
+                second_component - first_component[3]
+            }
+        )
     end
 end
 
@@ -75,19 +87,23 @@ function MVec3.__mul(first_component, second_component)
     end
 
     if type(first_component) is "number" and getmetatable(second_component) is self then
-        return {
-            first_component * second_component[1],
-            first_component * second_component[2],
-            first_component * second_component[3]
-        }
+        return self.new(
+            {
+                first_component * second_component[1],
+                first_component * second_component[2],
+                first_component * second_component[3]
+            }
+        )
     end
 
     if type(second_component) is "number" and getmetatable(first_component) is self then
-        return {
-            second_component * first_component[1],
-            second_component * first_component[2],
-            second_component * first_component[3]
-        }
+        return self.new(
+            {
+                second_component * first_component[1],
+                second_component * first_component[2],
+                second_component * first_component[3]
+            }
+        )
     end
 end
 
@@ -96,15 +112,17 @@ function MVec3.dot(othervec)
 end
 
 function MVec3.cross(othervec)
-    return {
-        self[2]*othervec[3] - self[3]*othervec[2],
-        self[3]*othervec[1] - self[1]*othervec[3],
-        self[1]*othervec[2] - self[2]*othervec[1]
-    }
+    return self.new(
+        {
+            self[2]*othervec[3] - self[3]*othervec[2],
+            self[3]*othervec[1] - self[1]*othervec[3],
+            self[1]*othervec[2] - self[2]*othervec[1]
+        }
+    )
 end
 
 function MVec3.magnitude()
-    return math.sqrt(self.squaredMagnitude)
+    return math.sqrt(self.squaredMagnitude())
 end
 
 function MVec3.squaredMagnitude()
@@ -112,9 +130,12 @@ function MVec3.squaredMagnitude()
 end
 
 function MVec3.normalize()
-    return {
-        self[1]/self.magnitude(),
-        self[2]/self.magnitude(),
-        self[3]/self.magnitude()
-    }
+    mag = self.magnitude
+    return self.new(
+        {
+            self[1]/mag,
+            self[2]/mag,
+            self[3]/mag
+        }
+    )
 end
